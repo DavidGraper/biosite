@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br />
+<h2>Add Application for '{{firstname}} {{lastname}}'</h2>
+<br />
+<form action="" method="post">
+  {% csrf_token %}
+  {{ form.personid.as_hidden }}
+  <div class="mb-4">
+    <h6 class="text-uppercase pt-5 font-italic">Applied For:</h6>
+    <hr class="solid">
+  </div>
+  <div class="form-row">
+    <div class="col-lg-4">{{ form.semesterid|as_crispy_field }}</div>
+    <div class="col-lg-4">{{ form.degreetypeid|as_crispy_field }}</div>
+    <div class="col-lg-4">{{ form.degreeareaid|as_crispy_field }}</div>
+  </div>
+  <div class="mb-4">
+    <h6 class="text-uppercase pt-5 font-italic">Application Scores:</h6>
+    <hr class="solid">
+  </div>
+  <div class="form-row">
+    <div class="col-lg-2">{{ form.quantraw|as_crispy_field }}</div>
+    <div class="col-lg-2">{{ form.quantpercentile|as_crispy_field }}</div>
+    <div class="col-lg-2">{{ form.verbalraw|as_crispy_field }}</div>
+    <div class="col-lg-2">{{ form.verbalpercentile|as_crispy_field }}</div>
+    <div class="col-lg-2">{{ form.writtenraw|as_crispy_field }}</div>
+    <div class="col-lg-2">{{ form.writtenpercentile|as_crispy_field }}</div>
+  </div>
+  <div class="form-row">
+    <div class="col-lg-2">{{ form.gpa|as_crispy_field }}</div>
+    <div class="col-lg-2">{{ form.toefl|as_crispy_field }}</div>
+    <div class="col-lg-2">{{ form.ielts|as_crispy_field }}</div>
+  </div>
+  <div class="mb-4">
+    <h6 class="text-uppercase pt-5 font-italic">Application Dates:</h6>
+    <hr class="solid">
+  </div>
+  <div class="form-row">
+    <div class="col-lg-4">{{ form.applicationreceipt|as_crispy_field }}</div>
+    <div class="col-lg-4">{{ form.applicationacknowledged|as_crispy_field }}</div>
+  </div>
+  <div class="mb-4">
+    <h6 class="text-uppercase pt-5 font-italic">Committee Evaluation:</h6>
+    <hr class="solid">
+  </div>
+  <div class="form-row">
+    <div class="col-lg-4">{{ form.committeeevaluationid|as_crispy_field }}</div>
+    <div class="col-lg-4">{{ form.committeedecisiondate|as_crispy_field }}</div>
+  </div>
+  <div class="mb-4">
+    <h6 class="text-uppercase pt-5 font-italic">Applicant Response:</h6>
+    <hr class="solid">
+  </div>
+  <div class="form-row">
+    <div class="col-lg-4">{{ form.applicantresponseid|as_crispy_field }}</div>
+    <div class="col-lg-4">{{ form.evaluationacknowledged|as_crispy_field }}</div>
+  </div>
+  <div class="mb-4">
+    <h6 class="text-uppercase pt-5 font-italic">Application Notes:</h6>
+    <hr class="solid">
+  </div>
+  <div class="form-row">
+    <div class="col-lg-12">{{ form.notes|as_crispy_field }} <input type="submit" value="Submit"></div>
+  </div>
+</form>
+
+{% endblock %}

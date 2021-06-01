@@ -1,0 +1,674 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br />
+<h2>{{ action }} Demographic Information for '{{firstname}} {{lastname}}'</h2>
+<br />
+{% if error_message %}
+<p><strong>{{ error_message }}</strong></p>
+{% endif %}
+<div class="bs-example">
+  <div class="accordion" id="accordionExample">
+
+    <div class="card">
+      <div class="card-header" id="headingZero">
+        <h3 class="mb-0">
+          <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseZero">Personal Information</button>
+        </h3>
+      </div>
+      <div id="collapseZero" class="collapse" aria-labelledby="headingZero" data-parent="#accordionExample">
+        <div class="card-body">
+          <h3 class="mb-4">Demographics</h3>
+          <br />
+          <table border="1" width="100%">
+            <tr>
+              <td>Firstname</td>
+              <td>{{ person.firstname }}</td>
+            </tr>
+            <tr>
+              <td>Lastname</td>
+              <td>{{ person.lastname }}</td>
+            </tr>
+            <tr>
+              <td>Middle Name / Initial</td>
+              <td>{{ person.middle }}</td>
+            </tr>
+            <tr>
+              <td>UAlbany EmpID</td>
+              <td>{{ person.ualbanyempid }}</td>
+            </tr>
+            <tr>
+              <td>UAlbany NetID</td>
+              <td>{{ person.ualbanynetid }}</td>
+            </tr>
+            <tr>
+              <td>Personal Title</td>
+              <td>{{ person.personaltitleid }}</td>
+            </tr>
+            <tr>
+              <td>Birthdate</td>
+              <td>{{ person.birthdate }}</td>
+            </tr>
+            <tr>
+              <td>Gender</td>
+              <td>{{ person.genderid }}</td>
+            </tr>
+            <tr>
+              <td>Ethnicity</td>
+              <td>{{ person.ethnicityid }}</td>
+            </tr>
+            <tr>
+              <td>Country of Origin</td>
+              <td>{{ person.countryoforiginid}}</td>
+            </tr>
+            <tr>
+              <td>NYS Resident</td>
+              <td>{{ person.nysresident }}</td>
+            </tr>
+          </table>
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:person-update' person.id %}>Update</a></p>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h3 class="mb-0">
+          <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne">Ways To Communicate With Them</button>
+        </h3>
+      </div>
+      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+          <br />
+          <h3 class="mb-4">Addresses</h3>
+          {% if person.datapersonaddresses_set.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>Address Type</th>
+              <th>Address</th>
+              <th>Addt'l Address 1</th>
+              <th>Addt'l Address 2</th>
+              <th>Addt'l Address 3</th>
+              <th>City</th>
+              <th>State</th>
+              <th>Country</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for address in person.datapersonaddresses_set.all %}
+            <tr>
+              <td>{{ address.addresstypeid.addresstype }}</td>
+              <td>{{ address.address0 }}</td>
+              <td>{{ address.address1 }}</td>
+              <td>{{ address.address2 }}</td>
+              <td>{{ address.address3 }}</td>
+              <td>{{ address.city}}</td>
+              <td>{{ address.stateid.stateabbreviation}}</td>
+              <td>{{ address.countryid.countryname}}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personaddress-update' address.id %}><i class="fas fa-wrench"></i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personaddress-delete' address.id %}><i class="fas fa-trash" </i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personaddress-create' person.id %}>Add New Address</a></p>
+          <br />
+          <br />
+          <h3 class="mb-4">Email Addresses</h3>
+          {% if person.datapersonemailaddresses_set.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>Email Address</th>
+              <th>Email Type</th>
+              <th>Confidentiality</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for emailaddress in person.datapersonemailaddresses_set.all %}
+            <tr>
+              <td>{{ emailaddress.emailaddress }}</td>
+              <td>{{ emailaddress.emailaddressclassid }}</td>
+              <td>{{ emailaddress.confidentialityid }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personemailaddress-update' emailaddress.id %}><i class="fa fa-wrench"></i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personemailaddress-delete' emailaddress.id %}><i class="fa fa-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personemailaddress-create' person.id %}>Add New Email Address</a></p>
+          <br />
+          <br />
+          <h3 class="mb-4">Phone Numbers</h3>
+          {% if person.datapersonemailaddresses_set.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>US Phone Code</th>
+              <th>Phone Type</th>
+              <th>Phone Number</th>
+              <th>Confidentiality</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for phone in person.datapersonphones_set.all %}
+            <tr>
+              <td>{{ phone.usphonecode }}</td>
+              <td>{{ phone.phonetypecode }}</td>
+              <td>{{ phone.phonenumber }}</td>
+              <td>{{ phone.confidentialityid }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personphone-update' phone.id %}><i class="fa fa-wrench"></i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personphone-delete' phone.id %}><i class="fa fa-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personphone-create' person.id %}>Add New Phone Number</a></p>
+          <br />
+          <br />
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingT1Gwo">
+        <h3 class="mb-0">
+          <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo">Academic Information About Them</button>
+        </h3>
+      </div>
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+        <div class="card-body">
+          <!-- Affiliated Organization -->
+          <br />
+          <h3 class="mb-4">Affiliated Organizations</h3>
+          {% if person.datapersonaffiliatedorganizations_set.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>Affiliated Organization Department</th>
+              <th>Address 0</th>
+              <th>Address 1</th>
+              <th>Address 2</th>
+              <th>Address 3</th>
+              <th>Address 4</th>
+              <th>City</th>
+              <th>State</th>
+              <th>Country</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for affiliatedorganization in person.datapersonaffiliatedorganizations_set.all %}
+            <tr>
+              <td>{{ affiliatedorganization.affiliatedorganizationdepartment }}</td>
+              <td>{{ affiliatedorganization.address0 }}</td>
+              <td>{{ affiliatedorganization.address1 }}</td>
+              <td>{{ affiliatedorganization.address2 }}</td>
+              <td>{{ affiliatedorganization.address3 }}</td>
+              <td>{{ affiliatedorganization.address4 }}</td>
+              <td>{{ affiliatedorganization.city }}</td>
+              <td>{{ affiliatedorganization.stateid }}</td>
+              <td>{{ affiliatedorganization.countryid }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personaffiliatedorganization-update' affiliatedorganization.id %}><i class="fa fa-wrench"></i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personaffiliatedorganization-delete' affiliatedorganization.id %}><i class="fa fa-trash" </i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personaffiliatedorganization-create' person.id %}>Add New Affiliated Organization</a></p>
+          <br />
+          <!-- Education -->
+          <h3 class="mb-4">Education</h3>
+          {% if person.datapersoneducation_set.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>Institution</th>
+              <th>Degree</th>
+              <th>Graduation Year</th>
+              <th>Ordinal</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for education in person.datapersoneducation_set.all %}
+            <tr>
+              <td>{{ education.institution }}</td>
+              <td>{{ education.degree }}</td>
+              <td>{{ education.gradyear }}</td>
+              <td>{{ education.ordinal }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personeducation-update' education.id %}><i class="fa fa-wrench"></i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personeducation-delete' education.id %}><i class="fa fa-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personeducation-create' person.id %}>Add New Education Entry</a></p>
+          <!-- Publications -->
+          <h3 class="mb-4">Publications</h3>
+          {% if person.datapersonpublications_set.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>Journal</th>
+              <th>Volume Info</th>
+              <th>Publication Date</th>
+              <th>Title</th>
+              <th>Author List</th>
+              <th>URL</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for publication in person.datapersonpublications_set.all %}
+            <tr>
+              <td>{{ publication.journal }}</td>
+              <td>{{ publication.volumeinfo }}</td>
+              <td>{{ publication.pubdate }}</td>
+              <td>{{ publication.title }}</td>
+              <td>{{ publication.authorlist }}</td>
+              <td>{{ publication.url }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personpublication-update' publication.id %}><i class="fa fa-wrench"></i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personpublication-delete' publication.id %}><i class="fa fa-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personpublication-create' person.id %}>Add New Publication</a></p>
+          <!-- Research Information -->
+          <h3 class="mb-4">Research Statement</h3>
+          {% if person.datapersonresearchinfo_set.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>Research Qualifications</th>
+              <th>Research Interest</th>
+              <th>Last Updated</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for research in person.datapersonresearchinfo_set.all %}
+            <tr>
+              <td>{{ research.researchqualifications }}</td>
+              <td>{{ research.researchinterest }}</td>
+              <td>{{ research.lastupdated }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personresearchinfo-update' research.id %}><i class="fa fa-wrench"></i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personresearchinfo-delete' research.id %}><i class="fa fa-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personresearchinfo-create' person.id %}>Add New Research Statement</a></p>
+          <!-- Websites -->
+          <h3 class="mb-4"> Academic Websites</h3>
+          {% if person.datapersonwebsites_set.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>Website Type</th>
+              <th>Website URL</th>
+              <th>Confidentiality</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for website in person.datapersonwebsites_set.all %}
+            <tr>
+              <td>{{ website.websitetypecode }}</td>
+              <td>{{ website.websiteurl }}</td>
+              <td>{{ website.confidentialityid }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personwebsite-update' website.id %}><i class="fa fa-wrench"></i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personwebsite-delete' website.id %}><i class="fa fa-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personwebsite-create' person.id %}>Add New Website</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingThree">
+        <h3 class="mb-0">
+          <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree">Biology Department Information</button>
+        </h3>
+      </div>
+      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+        <div class="card-body">
+          <!-- Advisor/Advisee -->
+          <br />
+          <h3 class="mb-4">Advisees</h3>
+          {% if advisees.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>Lastname</th>
+              <th>Firstname</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for advisee in advisees %}
+            <tr>
+              <td>{{ advisee.adviseeid.lastname }}</td>
+              <td>{{ advisee.adviseeid.firstname }}</td>
+              <td>{{ advisee.startdate }}</td>
+              <td>{{ advisee.enddate }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personadvisee-update' advisee.id %}><i class="fa fa-wrench" </i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personadvisee-delete' advisee.id %}><i class="fa fa-trash" </i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personadvisee-create' person.id %}>Add New Advisee</a></p>
+          <br />
+          <br />
+          <h3 class="mb-4">Advisors</h3>
+          {% if advisors.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>Lastname</th>
+              <th>Firstname</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for advisor in advisors %}
+            <tr>
+              <td>{{ advisor.advisorid.lastname }}</td>
+              <td>{{ advisor.advisorid.firstname }}</td>
+              <td>{{ advisor.startdate }}</td>
+              <td>{{ advisor.enddate }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personadvisor-update' advisor.id %}><i class="fa fa-wrench" </i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personadvisor-delete' advisor.id %}><i class="fa fa-trash" </i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personadvisor-create' person.id %}>Add New Advisor</a></p>
+          <br />
+          <!-- Degree Area -->
+          <h3 class="mb-4">Biology Degree Area(s)</h3>
+          {% if person.datapersonbiologydegreeareas_set.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>Biology Degree Area</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for biologydegreearea in person.datapersonbiologydegreeareas_set.all %}
+            <tr>
+              <td>{{ biologydegreearea.biologydegreeareaid.degreearea }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personbiologydegreearea-update' biologydegreearea.id %}><i class="fa fa-wrench"></i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personbiologydegreearea-delete' biologydegreearea.id %}><i class="fa fa-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personbiologydegreearea-create' person.id %}>Add New Biology Degree Area</a></p>
+          <!-- break -->
+          <h3 class="mb-4">Biology Department Job Title(s)</h3>
+          {% if person.datapersonbiologydeptjobtitles_set.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>Job Title</th>
+              <th>Active</th>
+              <th>Activated</th>
+              <th>Deactivated</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for biologydeptjobtitle in person.datapersonbiologydeptjobtitles_set.all %}
+            <tr>
+              <td>{{ biologydeptjobtitle.jobtitleid.jobtitle }}</td>
+              <td>{{ biologydeptjobtitle.active }}</td>
+              <td>{{ biologydeptjobtitle.activated }}</td>
+              <td>{{ biologydeptjobtitle.deactivated }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personbiologydeptjobtitle-update' biologydeptjobtitle.id %}><i class="fa fa-wrench"></i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personbiologydeptjobtitle-delete' biologydeptjobtitle.id %}><i class="fa fa-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personbiologydeptjobtitle-create' person.id %}>Add New Biology Job Title</a></p>
+          <!-- break -->
+          <h3 class="mb-4">Biology Committee Assignment(s)</h3>
+          {% if person.datapersoncommitteeassignments_set.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>Committee</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Chair</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for biologycommitteeassignment in person.datapersoncommitteeassignments_set.all %}
+            <tr>
+              <td>{{ biologycommitteeassignment.committeeassignmentid.committeename }}</td>
+              <td>{{ biologycommitteeassignment.startdate }}</td>
+              <td>{{ biologycommitteeassignment.enddate }}</td>
+              <td>{{ biologycommitteeassignment.chair }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personcommitteeassignment-update' biologycommitteeassignment.id %}><i class="fa fa-wrench"></i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personcommitteeassignment-delete' biologycommitteeassignment.id %}><i class="fa fa-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personcommitteeassignment-create' person.id %}>Add New Biology Committee Assignment</a></p>
+          <!-- break -->
+          <h3 class="mb-4">Lab Affiliations</h3>
+          {% if person.datapersonlabs_set.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>Lab Name</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for lab in person.datapersonlabs_set.all %}
+            <tr>
+              <td>{{ lab.labid.labname }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personlab-update' lab.id %}><i class="fa fa-wrench"></i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personlab-delete' lab.id %}><i class="fa fa-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personlab-create' person.id %}>Add New Lab Affiliation</a></p>
+          <!-- break -->
+          <h3 class="mb-4">Office Hours</h3>
+          {% if person.datapersonofficehours_set.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>Semester</th>
+              <th>Office Hours</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for officehours in person.datapersonofficehours_set.all %}
+            <tr>
+              <td>{{ officehours.semesterid.semester }} {{ officehours.semesterid.year }}</td>
+              <td>{{ officehours.officehourstext }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personofficehours-update' officehours.id %}><i class="fa fa-wrench"></i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personofficehours-delete' officehours.id %}><i class="fa fa-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personofficehours-create' person.id %}>Add New Office Hours</a></p>
+          <!-- break -->
+          <h3 class="mb-4">Rooms</h3>
+          {% if person.datapersonrooms_set.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>Building</th>
+              <th>Room</th>
+              <th>Room Use</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for room in person.datapersonrooms_set.all %}
+            <tr>
+              <td>{{ room.roomid.buildingid.buildingname }}</td>
+              <td>{{ room.roomid.roomnumber }}</td>
+              <td>{{ room.roomusetype }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personroom-update' room.id %}><i class="fa fa-wrench"></i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personroom-delete' room.id %}><i class="fa fa-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personroom-create' person.id %}>Add New Room</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingFour">
+        <h3 class="mb-0">
+          <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour">Biology Building Security Information</button>
+        </h3>
+      </div>
+      <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+        <div class="card-body">
+          <!-- break -->
+          <h3 class="mb-4">Keypad Codes</h3>
+          {% if person.datapersonkeypadcodes_set.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>Building</th>
+              <th>Room</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for keypadcode in person.datapersonkeypadcodes_set.all %}
+            <tr>
+              <td>{{ keypadcode.keypadcodeid.roomid.buildingid }}</td>
+              <td>{{ keypadcode.keypadcodeid.roomid.roomnumber }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personkeypadcode-update' keypadcode.id %}><i class="fa fa-wrench"></i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personkeypadcode-delete' keypadcode.id %}><i class="fa fa-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personkeypadcode-create' person.id %}>Add New Keypadcode</a></p>
+          <!-- break -->
+          <h3 class="mb-4">UAlbany ID Card Groups</h3>
+          {% if person.datapersonualbanyidcardgroup_set.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>UAlbany Card Group</th>
+              <th>Effective</th>
+              <th>Expires</th>
+              <th>Comment</th>
+              <th>Created</th>
+              <th>Operator</th>
+              <th>Membertype</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for ualbanyidcardgroup in person.datapersonualbanyidcardgroup_set.all %}
+            <tr>
+              <td>{{ ualbanyidcardgroup.ualbanycardgroupid.patrongroup }}</td>
+              <td>{{ ualbanyidcardgroup.effective }}</td>
+              <td>{{ ualbanyidcardgroup.expires }}</td>
+              <td>{{ ualbanyidcardgroup.comment }}</td>
+              <td>{{ ualbanyidcardgroup.created }}</td>
+              <td>{{ ualbanyidcardgroup.operator }}</td>
+              <td>{{ ualbanyidcardgroup.membertype }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personualbanyidcardgroup-update' ualbanyidcardgroup.id %}><i class="fa fa-wrench"></i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personualbanyidcardgroup-delete' ualbanyidcardgroup.id %}><i class="fa fa-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personualbanyidcardgroup-create' person.id %}>Add New UAlbany ID Card Group</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingFive">
+        <h3 class="mb-0">
+          <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive">University Information</button>
+        </h3>
+      </div>
+      <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+        <div class="card-body">
+          <!-- break -->
+          <h3 class="mb-4">Listserv Memberships</h3>
+          {% if person.datapersonlistservs_set.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>Listserv Name</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for listserv in person.datapersonlistservs_set.all %}
+            <tr>
+              <td>{{ listserv.listservid.listservname }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personlistserv-update' listserv.id %}><i class="fa fa-wrench"></i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personlistserv-delete' listserv.id %}><i class="fa fa-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personlistserv-create' person.id %}>Add New Listserv Membership</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingSix">
+        <h3 class="mb-0">
+          <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix">Application Information</button>
+        </h3>
+      </div>
+      <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+        <div class="card-body">
+          <!-- Application -->
+          <br />
+          <h3 class="mb-4">Applications</h3>
+          {% if person.datapersonapplications_set.count > 0 %}
+          <table border="1" width="100%">
+            <tr>
+              <th>Year</th>
+              <th>Semester</th>
+              <th>Degree Type</th>
+              <th>Degree Area</th>
+              <th>Received</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+            {% for application in person.datapersonapplications_set.all %}
+            <tr>
+              <td>{{ application.semesterid.year }}</td>
+              <td>{{ application.semesterid.semester }}</td>
+              <td>{{ application.degreetypeid.degreetype }}</td>
+              <td>{{ application.degreeareaid.degreearea }}</td>
+              <td>{{ application.applicationreceipt }}</td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personapplication-update' application.id %}><i class="fa fa-wrench"></i></a></td>
+              <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personapplication-delete' application.id %}><i class="fa fa-trash" </i></a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% endif %}
+          <br />
+          <p><a class="btn btn-primary" href={% url 'keypadcodes:personapplication-create' person.id %}>Add New Application</a></p>
+          <br />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

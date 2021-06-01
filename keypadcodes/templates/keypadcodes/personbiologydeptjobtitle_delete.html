@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br />
+<p>Are you sure you want to delete biologydeptjobtitle "{{ biologydeptjobtitle.jobtitleid }}" for user "{{ biologydeptjobtitle.personid.firstname }} {{ biologydeptjobtitle.personid.lastname }}""?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <a href="/keypadcodes/person/{{ biologydegreearea.personid.id }}">Cancel</a>
+  <input type="submit" name="Confirm">
+</form>
+
+{% endblock %}

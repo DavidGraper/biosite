@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br />
+<h2>Add Advisee for '{{firstname}} {{lastname}}'</h2>
+<br />
+<form action="" method="post">
+  {% csrf_token %}
+  {{ form.advisorid.as_hidden }}
+  <div class="form-row">
+    <div class="col-lg-4">{{ form.adviseeid|as_crispy_field }}</div>
+  </div>
+  <div class="form-row">
+    <div class="col-lg-4">{{ form.startdate|as_crispy_field }}</div>
+  </div>
+  <div class="form-row">
+    <div class="col-lg-4">{{ form.enddate|as_crispy_field }}</div>
+  </div>
+  <input type="submit" value="Submit">
+</form>
+
+{% endblock %}

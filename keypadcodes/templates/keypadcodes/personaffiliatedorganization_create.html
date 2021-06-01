@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br />
+<h2>Add Affiliated Organization for '{{firstname}} {{lastname}}'</h2>
+<br />
+<form action="" method="post">
+  {% csrf_token %}
+  {{ form.personid.as_hidden }}
+  <div class="form-row">
+    <div class="col-lg-12">{{ form.affiliatedorganizationdepartment|as_crispy_field }}</div>
+  </div>
+  <div class="form-row">
+    <div class="col-lg-4">{{ form.address0|as_crispy_field }}</div>
+    <div class="col-lg-4">{{ form.address1|as_crispy_field }}</div>
+    <div class="col-lg-4">{{ form.address2|as_crispy_field }}</div>
+    <div class="col-lg-4">{{ form.address3|as_crispy_field }}</div>
+    <div class="col-lg-4">{{ form.address4|as_crispy_field }}</div>
+  </div>
+  <div class="form-row">
+    <div class="col-lg-4">{{ form.city|as_crispy_field }}</div>
+    <div class="col-lg-4">{{ form.stateid|as_crispy_field }}</div>
+    <div class="col-lg-4">{{ form.countryid|as_crispy_field }}</div>
+  </div>
+  <input type="submit" value="Submit">
+</form>
+
+{% endblock %}

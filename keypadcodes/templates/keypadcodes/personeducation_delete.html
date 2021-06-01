@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br />
+<p>Are you sure you want to delete education entry "{{ education.institution }} {{ education.gradyear }}" for user "{{ education.personid.firstname }} {{ education.personid.lastname }}""?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <a href="/keypadcodes/person/{{ education.personid.id }}">Cancel</a>
+  <input type="submit" name="Confirm">
+</form>
+
+{% endblock %}

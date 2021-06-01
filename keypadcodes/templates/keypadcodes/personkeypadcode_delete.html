@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br />
+<p>Are you sure you want to delete keypadcode "{{ keypadcode.keypadcodeid.roomid.buildingid.buildingname }} {{ keypadcode.keypadcodeid.roomid.roomnumber }}" for user "{{ keypadcode.personid.firstname }} {{ keypadcode.personid.lastname }}""?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <a href="/keypadcodes/person/{{ keypadcode.personid.id }}">Cancel</a>
+  <input type="submit" name="Confirm">
+</form>
+
+{% endblock %}

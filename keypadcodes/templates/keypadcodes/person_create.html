@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br />
+<h2>{{ action }} Demographic Information for '{{firstname}} {{lastname}}'</h2>
+<br />
+<form action="" method="post">
+  {% csrf_token %}
+  <div class="form-row">
+    <div class="col-lg-4">
+      {{ form.lastname|as_crispy_field }}
+    </div>
+    <div class="col-lg-4">
+      {{ form.firstname|as_crispy_field }}
+    </div>
+    <div class="col-lg-4">
+      {{ form.middle|as_crispy_field }}
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-lg-2">
+      {{ form.ualbanyempid|as_crispy_field }}
+    </div>
+    <div class="col-lg-2">
+      {{ form.ualbanynetid|as_crispy_field }}
+    </div>
+    <div class="col-lg-2">
+      {{ form.persontypeid|as_crispy_field }}
+    </div>
+    <div class="col-lg-2">
+      {{ form.personaltitleid|as_crispy_field }}
+    </div>
+     <div class="col-lg-2">
+          {{ form.genderid|as_crispy_field }}
+        </div>
+        <div class="col-lg-2">
+          {{ form.ethnicityid|as_crispy_field }}
+        </div>
+  </div>
+  <div class="form-row">
+    <div class="col-lg-4">
+      {{ form.birthdate|as_crispy_field }}
+    </div>
+
+
+    <div class="col-lg-4">
+      {{ form.countryoforiginid|as_crispy_field }}
+    </div>
+    <div class="col-lg-4">
+      {{ form.nysresident|as_crispy_field }}
+    </div>
+  </div>
+  <input type="submit" value="Submit">
+</form>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br />
+<p>Are you sure you want to delete advisee "{{ advisee.adviseeid.lastname }}" for user {{ advisee.advisorid.lastname }}?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <a href="/keypadcodes/person/{{ advisee.advisorid.id }}">Cancel</a>
+  <input type="submit" name="Confirm">
+</form>
+
+{% endblock %}

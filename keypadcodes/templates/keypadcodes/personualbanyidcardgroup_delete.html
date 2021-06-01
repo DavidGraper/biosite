@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br />
+<p>Are you sure you want to delete UAlbany ID Card group "{{ ualbanyidcardgroup }}" for user "{{ ualbanyidcardgroup.personid.firstname }} {{ ualbanyidcardgroup.personid.lastname }}"?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <a href="/keypadcodes/person/{{ ualbanyidcardgroup.personid.id }}">Cancel</a>
+  <input type="submit" name="Confirm">
+</form>
+
+{% endblock %}

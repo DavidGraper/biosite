@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br />
+<h2>Add Website Info for '{{firstname}} {{lastname}}'</h2>
+<br />
+<form action="" method="post">
+  {% csrf_token %}
+  {{ form.personid.as_hidden }}
+  <div class="form-row">
+    <div class="col-lg-4">{{ form.websitetypecode|as_crispy_field }}</div>
+  </div>
+  <div class="form-row">
+    <div class="col-lg-4">{{ form.websiteurl|as_crispy_field }}</div>
+  </div>
+  <div class="form-row">
+    <div class="col-lg-4">{{ form.confidentialityid|as_crispy_field }}</div>
+  </div>
+  <input type="submit" value="Submit">
+</form>
+
+{% endblock %}

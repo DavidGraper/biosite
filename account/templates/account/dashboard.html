@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1>Dashboard for user '{{ request.user.first_name }} {{ request.user.last_name }}'</h1>
+
+<br>
+<!-- Nav pills -->
+<ul class="nav nav-pills" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="pill" href="#home">Demographic Info</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="pill" href="#menu1">Street Address(es)</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="pill" href="#menu2">Email Address(es)</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="pill" href="#menu3">Phone Number(s)</a>
+  </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div id="home" name="text" class="container tab-pane active"><br>
+    <div>
+      <table border="1" width="100%">
+        <tr>
+          <td>Firstname</td>
+          <td>{{ person.firstname }}</td>
+        </tr>
+        <tr>
+          <td>Lastname</td>
+          <td>{{ person.lastname }}</td>
+        </tr>
+        <tr>
+          <td>Middle Name / Initial</td>
+          <td>{{ person.middle }}</td>
+        </tr>
+        <tr>
+          <td>UAlbany EmpID</td>
+          <td>{{ person.ualbanyempid }}</td>
+        </tr>
+        <tr>
+          <td>UAlbany NetID</td>
+          <td>{{ person.ualbanynetid }}</td>
+        </tr>
+        <tr>
+          <td>Personal Title</td>
+          <td>{{ person.personaltitleid }}</td>
+        </tr>
+        <tr>
+          <td>Birthdate</td>
+          <td>{{ person.birthdate }}</td>
+        </tr>
+        <tr>
+          <td>Gender</td>
+          <td>{{ person.genderid }}</td>
+        </tr>
+        <tr>
+          <td>Ethnicity</td>
+          <td>{{ person.ethnicityid }}</td>
+        </tr>
+        <tr>
+          <td>Country of Origin</td>
+          <td>{{ person.countryoforiginid}}</td>
+        </tr>
+        <tr>
+          <td>NYS Resident</td>
+          <td>{{ person.nysresident }}</td>
+        </tr>
+      </table>
+      <br />
+      <p style="text-align:right;" class="text-primary"><i class="fas fa-user-edit"></i>&nbsp;&nbsp;<a href={% url 'keypadcodes:person-update' person.id %}>Update</a></p>
+      <br />
+    </div>
+  </div>
+  <div id="menu1" class="container tab-pane fade"><br>
+    <table border="1" width="100%">
+      <tr>
+        <th>Address Type</th>
+        <th>Address</th>
+        <th>Addt'l Address 1</th>
+        <th>Addt'l Address 2</th>
+        <th>Addt'l Address 3</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Country</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+      {% for address in person.datapersonaddresses_set.all %}
+      <tr>
+        <td>{{ address.addresstypeid.addresstype }}</td>
+        <td>{{ address.address0 }}</td>
+        <td>{{ address.address1 }}</td>
+        <td>{{ address.address2 }}</td>
+        <td>{{ address.address3 }}</td>
+        <td>{{ address.city}}</td>
+        <td>{{ address.stateid.stateabbreviation}}</td>
+        <td>{{ address.countryid.countryname}}</td>
+        <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personaddress-update' address.id %}><i class="fas fa-wrench"></i></a></td>
+        <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personaddress-delete' address.id %}><i class="fas fa-trash" </i></a></td>
+      </tr>
+      {% endfor %}
+    </table>
+    <br />
+    <p style="text-align:right;" class="text-primary"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;<a href={% url 'keypadcodes:personaddress-create' person.id %}>Add New Address</a></p>
+    <br />
+  </div>
+  <div id="menu2" class="container tab-pane fade"><br>
+    <table border="1" width="100%">
+      <tr>
+        <th>Email Address</th>
+        <th>Email Type</th>
+        <th>Confidentiality</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+      {% for emailaddress in person.datapersonemailaddresses_set.all %}
+      <tr>
+        <td>{{ emailaddress.emailaddress }}</td>
+        <td>{{ emailaddress.emailaddressclassid }}</td>
+        <td>{{ emailaddress.confidentialityid }}</td>
+        <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personemailaddress-update' emailaddress.id %}><i class="fa fa-wrench"></i></a></td>
+        <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personemailaddress-delete' emailaddress.id %}><i class="fa fa-trash"></i></a></td>
+      </tr>
+      {% endfor %}
+    </table>
+    <br />
+    <p style="text-align:right;" class="text-primary"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;<a href={% url 'keypadcodes:personemailaddress-create' person.id %}>Add New Email Address</a></p>
+    <br />
+  </div>
+  <div id="menu3" class="container tab-pane fade"><br>
+    <table border="1" width="100%">
+      <tr>
+        <th>US Phone Code</th>
+        <th>Phone Type</th>
+        <th>Phone Number</th>
+        <th>Confidentiality</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+      {% for phone in person.datapersonphones_set.all %}
+      <tr>
+        <td>{{ phone.usphonecode }}</td>
+        <td>{{ phone.phonetypecode }}</td>
+        <td>{{ phone.phonenumber }}</td>
+        <td>{{ phone.confidentialityid }}</td>
+        <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personphone-update' phone.id %}><i class="fa fa-wrench"></i></a></td>
+        <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personphone-delete' phone.id %}><i class="fa fa-trash"></i></a></td>
+      </tr>
+      {% endfor %}
+    </table>
+    <br />
+    <p style="text-align:right;" class="text-primary"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;<a href={% url 'keypadcodes:personphone-create' person.id %}>Add New Phone Number</a></p>
+    <br />
+  </div>
+</div>
+
+
+<!-- <a href="{{ person.get_absolute_url }}">
+  <p>DatapersonID {{ person.id }}</p>
+</a> -->
+{% endblock %}
