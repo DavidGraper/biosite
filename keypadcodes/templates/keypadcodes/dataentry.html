@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div>
@@ -39,5 +40,41 @@
 </div>
 
 <div class="progress-bar" style="width:34%">&nbsp;</div>
+<br />
+<form action="" method="post">
+  {% csrf_token %}
+  <div class="form-row">
+    <div class="col-lg-4">
+      {{ form.lastname|as_crispy_field }}
+    </div>
+    <div class="col-lg-4">
+      {{ form.firstname|as_crispy_field }}
+    </div>
+    <div class="col-lg-4">
+      {{ form.middle|as_crispy_field }}
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-lg-2">
+      {{ form.ualbanyempid|as_crispy_field }}
+    </div>
+    <div class="col-lg-2">
+      {{ form.ualbanynetid|as_crispy_field }}
+    </div>
+    <div class="col-lg-2">
+      {{ form.personaltitleid|as_crispy_field }}
+    </div>
+     <div class="col-lg-2">
+          {{ form.genderid|as_crispy_field }}
+        </div>
+        <div class="col-lg-2">
+          {{ form.ethnicityid|as_crispy_field }}
+        </div>
+  </div>
+
+
+  <input type="submit" value="Submit">
+</form>
 
 {% endblock %}

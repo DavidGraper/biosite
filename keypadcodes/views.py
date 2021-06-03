@@ -1016,7 +1016,8 @@ def reportView(request):
 
 
 def dataEntry(request):
-    context = {'manager': request.user.groups.filter(name='DB Managers').exists()}
+    form = NewPersonForm()
+    context = {'form':form, 'manager': request.user.groups.filter(name='DB Managers').exists()}
     return render(request, 'keypadcodes/dataentry.html', context)
 
 def reports(request):
