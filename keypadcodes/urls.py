@@ -3,6 +3,9 @@ from django.contrib import admin
 
 from . import views
 
+from django.views.generic import TemplateView
+from .views import ContactWizard, FORMS
+
 app_name = 'keypadcodes'
 
 urlpatterns = [
@@ -75,4 +78,10 @@ urlpatterns = [
     path('dataentry/', views.dataEntry, name='dataentry'),
     path('reports/', views.reports, name='reports'),
     path('reports/reportview/', views.reportView, name='reportview'),
+    path('contact/', ContactWizard.as_view(FORMS), name='startcontact'),
+    path('done/', TemplateView.as_view(template_name='done.html')),
+
+
+
+
     ]
