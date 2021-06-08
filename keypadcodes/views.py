@@ -49,26 +49,70 @@ from django.http import HttpResponseRedirect
 from formtools.wizard.views import SessionWizardView
 
 FORMS = [
-    ('info', ContactForm1),
-    ('message', ContactForm2),
-    ('creditcard', ContactForm3),
+    # ('info', ContactForm1),
+    # ('message', ContactForm2),
+    # ('creditcard', ContactForm3),
+    ('newstudent0', NewStudent0),
+    ('newstudent1', NewStudent1),
+    # ('newstudent2', NewStudent2),
+    # ('newstudent3', NewStudent3),
+    # ('newstudent4', NewStudent4),
+    # ('newstudent5', NewStudent5),
 ]
 
 TEMPLATES = {
-    'info': 'keypadcodes/contact_info.html',
-    'message': 'keypadcodes/contact_message.html',
-    'creditcard': 'keypadcodes/contact_creditcard.html',
+    # 'info': 'keypadcodes/contact_info.html',
+    # 'info': 'keypadcodes/newstudent0.html',
+    # 'message': 'keypadcodes/contact_message.html',
+    # 'creditcard': 'keypadcodes/contact_creditcard.html',
+    'newstudent0': 'keypadcodes/newstudent0.html',
+    'newstudent1': 'keypadcodes/newstudent1.html',
+    # 'newstudent2': 'keypadcodes/newstudent2.html',
+    # 'newstudent3': 'keypadcodes/newstudent3.html',
+    # 'newstudent4': 'keypadcodes/newstudent4.html',
+    # 'newstudent5': 'keypadcodes/newstudent5.html',
 }
 
 
 class ContactWizard(SessionWizardView):
 
+    # file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'files_temp'))
+    instance = None
+
     def get_template_names(self):
         return [TEMPLATES[self.steps.current]]
 
+    def get_form_instance(self, step):
+        """
+        get ModelForm
+        """
+        if self.instance is None:
+            self.instance = DataPersons()
+        return self.instance
+
+
     def done(self, form_list, **kwargs):
-        do_something_with_the_form_data(form_list)
-        return HttpResponseRedirect('/keypadcodes/people/')
+
+        self.instance.save() # save data
+
+        return render(self.request, 'keypadcodes\done.html', {
+            'form_data': [form.cleaned_data for form in form_list]
+        })
+
+
+    # def done(self, form_list, **kwargs):
+    #
+    #     self.instance.save() # save data
+    #
+    #     form_data = [form.cleaned_data for form in form_list]
+    #
+    #     print('#####')
+    #     print('Lastname: %s' % form_data[0]['lastname'])
+    #
+    #     return render(self.request, 'keypadcodes\done.html', {
+    #         'form_data': form_data
+    #     })
+        # return HttpResponseRedirect('/keypadcodes/people/')
 
 def do_something_with_the_form_data(form_list):
     """

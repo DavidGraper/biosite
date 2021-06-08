@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div>
+  <h4 class="display-14 text-center">Enter New Graduate Student - Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</h4>
+  <br />
+</div>
+<div class="list-group list-group-horizontal">
+  <table width="100%" class="display-16 text-center">
+    <tr>
+      <td>
+        <h6 class="display-16 text-center">Basic Personal<br /> Information</h6>
+      </td>
+      <td>
+        <h6 class="display-16 text-center">Addresses<br />(Mailing and Email)</h6>
+      </td>
+      <td>
+        <h6 class="display-16 text-center">Image</h6>
+      </td>
+      <td>
+        <h6 class="display-16 text-center">Grad Student<br />Profile</h6>
+      </td>
+      <td>
+        <h6 class="display-16 text-center">Grad Student<br />Requirements</h6>
+      </td>
+      <td>
+        <h6 class="display-16 text-center">Grad Student<br />Support Information</h6>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h4><i class="fas fa-user" data-toggle="tooltip" title="Hooray!"></i></h4>
+      </td>
+      <td>
+        <h4><i class="fas fa-address-card"></i></h4>
+      </td>
+      <td>
+        <h4><i class="fas fa-camera"></i></h4>
+      </td>
+      <td>
+        <h4><i class="fas fa-list"></i></h4>
+      </td>
+      <td>
+        <h4><i class="fas fa-check-square"></i></h4>
+      </td>
+      <td>
+        <h4><i class="fas fa-life-ring"></i></h4>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="progress-bar" style="width:51%">&nbsp;</div>
+<br />
+<form action="" method="post">
+  {% csrf_token %}
+  <div class="form-row">
+    <div class="col-lg-4">
+      {{ form.lastname|as_crispy_field }}
+    </div>
+    <div class="col-lg-4">
+      {{ form.firstname|as_crispy_field }}
+    </div>
+    <div class="col-lg-4">
+      {{ form.middle|as_crispy_field }}
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-lg-2">
+      {{ form.ualbanyempid|as_crispy_field }}
+    </div>
+    <div class="col-lg-2">
+      {{ form.ualbanynetid|as_crispy_field }}
+    </div>
+    <div class="col-lg-2">
+      {{ form.personaltitleid|as_crispy_field }}
+    </div>
+    <div class="col-lg-2">
+      {{ form.genderid|as_crispy_field }}
+    </div>
+    <div class="col-lg-2">
+      {{ form.ethnicityid|as_crispy_field }}
+    </div>
+  </div>
+<br/>
+<br/>
+  <div class="form-row">
+    <div class="col-md-12 text-center">
+      <input type="submit" value="Next">
+    </div>
+  </div>
+
+</form>
+
+{% endblock %}

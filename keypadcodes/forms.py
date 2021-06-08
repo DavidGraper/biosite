@@ -208,13 +208,117 @@ class CommitteeAssignmentForm(forms.ModelForm):
         fields = '__all__'
 
 
-class ContactForm1(forms.Form):
-    subject = forms.CharField(max_length=100)
-    sender = forms.EmailField()
+class ContactForm1(forms.ModelForm):
+    # subject = forms.CharField(max_length=100)
+    # sender = forms.EmailField()
+    # class Meta:
+    #     model = DataPersons
+    #     fields = [
+    #         'lastname',
+    #         'firstname',
+    #         'middle',
+    #         'ualbanyempid',
+    #         'ualbanynetid',
+    #         'personaltitleid',
+    #         'birthdate',
+    #         'genderid',
+    #         'ethnicityid',
+    #         'countryoforiginid',
+    #         'nysresident',
+    #     ]
 
-class ContactForm2(forms.Form):
-    message = forms.CharField(widget=forms.Textarea, required=False)
+    class Meta:
+        model = DataPersons
+        fields = [
+            'lastname',
+            'firstname',
+            'middle',
+            'ualbanyempid',
+            'ualbanynetid',
+            'personaltitleid',
+            'birthdate',
+            'genderid',
+            'ethnicityid',
+            'countryoforiginid',
+            'nysresident',
+        ]
+        widgets = {
+            'lastname': forms.TextInput(),
+            'firstname': forms.TextInput(),
+        }
 
 
-class ContactForm3(forms.Form):
+class ContactForm2(forms.ModelForm):
+    # message = forms.CharField(widget=forms.Textarea, required=False)
+    class Meta:
+        model = DataPersons
+        fields = ('ualbanyempid', 'ualbanynetid', 'ethnicityid')
+        widgets = {
+            'ualbanyempid': forms.TextInput(),
+            'ualbanynetid': forms.TextInput()
+        }
+
+class ContactForm3(forms.ModelForm):
     creditcard = forms.CharField(max_length=10)
+
+
+
+class NewStudent0(forms.ModelForm):
+    class Meta:
+        model = DataPersons
+        fields = [
+            'lastname',
+            'firstname',
+            'middle',
+            'ualbanyempid',
+            'ualbanynetid',
+            'personaltitleid',
+            'birthdate',
+            'genderid',
+            'ethnicityid',
+            'countryoforiginid',
+            'nysresident',
+        ]
+        widgets = {
+            'lastname': forms.TextInput(attrs={'size':50}),
+            'firstname': forms.TextInput(attrs={'size':50}),
+            'middle': forms.TextInput(attrs={'size':50}),
+            'ualbanyempid': forms.TextInput(attrs={'size':50}),
+            'ualbanynetid': forms.TextInput(attrs={'size':50}),
+            'personaltitleid': forms.Select(attrs={'style':'width:468px'}),
+            'birthdate': forms.DateInput(attrs={'size':50}),
+            'genderid': forms.Select(attrs={'style':'width:468px'}),
+            'ethnicityid': forms.Select(attrs={'style':'width:468px'}),
+            'countryoforiginid': forms.Select(attrs={'style':'width:468px'}),
+            'nysresident': forms.Select(attrs={'style':'width:468px'}),
+        }
+
+class NewStudent1(forms.ModelForm):
+    class Meta:
+        model = DataPersonAddresses
+        fields = [
+            'addresstypeid',
+            'address0',
+            'address1',
+            'address2',
+            'address3',
+            'address4',
+            'city',
+            'stateid',
+            'countryid',
+            'zip',
+            'confidentialitylevelid',
+        ]
+        widgets = {
+            'addresstypeid': forms.Select(attrs={'style':'width:468px'}),
+            'address0': forms.TextInput(attrs={'size':50}),
+            'address1': forms.TextInput(attrs={'size':50}),
+            'address2': forms.TextInput(attrs={'size':50}),
+            'address3': forms.TextInput(attrs={'size':50}),
+            'address4': forms.TextInput(attrs={'size':50}),
+            'city': forms.TextInput(attrs={'size':50}),
+            'stateid': forms.Select(attrs={'style':'width:468px'}),
+            'countryid': forms.Select(attrs={'style':'width:468px'}),
+            'zip': forms.TextInput(attrs={'size':50}),
+            'confidentialitylevelid': forms.Select(attrs={'style':'width:468px'}),
+        }

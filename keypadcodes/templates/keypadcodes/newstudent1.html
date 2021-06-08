@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block head %}
+{{ wizard.form.media }}
+{% endblock %}
+
+{% block content %}
+<div>
+  <h4 class="display-14 text-center">Enter New Graduate Student - Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</h4>
+  <br />
+</div>
+<div class="list-group list-group-horizontal">
+  <table width="100%" class="display-16 text-center">
+    <tr>
+      <td>
+        <h6 class="display-16 text-center">Basic Personal<br /> Information</h6>
+      </td>
+      <td>
+        <h6 class="display-16 text-center">Addresses<br />(Mailing and Email)</h6>
+      </td>
+      <td>
+        <h6 class="display-16 text-center">Image</h6>
+      </td>
+      <td>
+        <h6 class="display-16 text-center">Grad Student<br />Profile</h6>
+      </td>
+      <td>
+        <h6 class="display-16 text-center">Grad Student<br />Requirements</h6>
+      </td>
+      <td>
+        <h6 class="display-16 text-center">Grad Student<br />Support Information</h6>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h4><i class="fas fa-user" data-toggle="tooltip" title="Hooray!"></i></h4>
+      </td>
+      <td>
+        <h4><i class="fas fa-address-card"></i></h4>
+      </td>
+      <td>
+        <h4><i class="fas fa-camera"></i></h4>
+      </td>
+      <td>
+        <h4><i class="fas fa-list"></i></h4>
+      </td>
+      <td>
+        <h4><i class="fas fa-check-square"></i></h4>
+      </td>
+      <td>
+        <h4><i class="fas fa-life-ring"></i></h4>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="progress-bar" style="width:34%">&nbsp;</div>
+<br />
+
+<form action="" method="post">
+  {% csrf_token %}
+  <table>
+  {{ wizard.management_form }}
+
+  {% if wizard.form.forms %}
+    {{ wizard.form.management_form }}
+    {% for form in wizard.form.forms %}
+      {{ form }}
+    {% endfor %}
+  {% else %}
+    {{ wizard.form }}
+  {% endif %}
+  </table>
+
+  {% if wizard.steps.prev %}
+  <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">{% trans "first step" %}</button>
+  <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">{% trans "prev step" %}</button>
+  {% endif %}
+
+  <input type="submit" value="{% trans "submit" %}">
+</form>
+
+<script>
+
+var objSelect = document.getElementById("id_newstudent1-countryid");
+var objSelect2 = document.getElementById("id_newstudent1-confidentialitylevelid");
+
+//Set selected
+setSelectedValue(objSelect, "United States");
+setSelectedValue(objSelect2, "Public");
+
+function setSelectedValue(selectObj, valueToSet) {
+    for (var i = 0; i < selectObj.options.length; i++) {
+        if (selectObj.options[i].text== valueToSet) {
+            selectObj.options[i].selected = true;
+            return;
+        }
+    }
+}
+
+</script>
+
+
+{% endblock %}
