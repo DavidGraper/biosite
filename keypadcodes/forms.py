@@ -290,7 +290,7 @@ class NewStudent0(forms.ModelForm):
             'genderid': forms.Select(attrs={'style':'width:468px'}),
             'ethnicityid': forms.Select(attrs={'style':'width:468px'}),
             'countryoforiginid': forms.Select(attrs={'style':'width:468px'}),
-            'nysresident': forms.Select(attrs={'style':'width:468px'}),
+            'nysresident': forms.CheckboxInput(),
         }
 
 class NewStudent1(forms.ModelForm):
@@ -321,4 +321,19 @@ class NewStudent1(forms.ModelForm):
             'countryid': forms.Select(attrs={'style':'width:468px'}),
             'zip': forms.TextInput(attrs={'size':50}),
             'confidentialitylevelid': forms.Select(attrs={'style':'width:468px'}),
+        }
+
+
+class NewStudent2(forms.ModelForm):
+    class Meta:
+        model = DataPersonEmailaddresses
+        fields = [
+            'emailaddressclassid',
+            'emailaddress',
+            'confidentialityid',
+        ]
+        widgets = {
+            'emailaddressclassid': forms.Select(attrs={'style':'width:468px'}),
+            'emailaddress': forms.EmailInput(attrs={'size':50}),
+            'confidentialityid': forms.Select(attrs={'style':'width:468px'}),
         }

@@ -9,7 +9,7 @@ from .views import ContactWizard, FORMS
 app_name = 'keypadcodes'
 
 urlpatterns = [
-    path('', views.IndexView, name='index'),
+    path('', views.IndexView, name='home'),
     path('people/', views.PeopleView, name='people'),
     path('person/<int:person_id>/', views.person, name='person'),
     # path('person/<int:pk>/update/', views.personUpdateiew.as_view(), name='person-update'),
@@ -78,7 +78,7 @@ urlpatterns = [
     path('dataentry/', views.dataEntry, name='dataentry'),
     path('reports/', views.reports, name='reports'),
     path('reports/reportview/', views.reportView, name='reportview'),
-    path('contact/', ContactWizard.as_view(FORMS), name='startcontact'),
+    path('contact/', ContactWizard.as_view(FORMS), name='startnewgradstudent'),
     path('done/', TemplateView.as_view(template_name='done.html')),
 
 

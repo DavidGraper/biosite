@@ -54,7 +54,7 @@ FORMS = [
     # ('creditcard', ContactForm3),
     ('newstudent0', NewStudent0),
     ('newstudent1', NewStudent1),
-    # ('newstudent2', NewStudent2),
+    ('newstudent2', NewStudent2),
     # ('newstudent3', NewStudent3),
     # ('newstudent4', NewStudent4),
     # ('newstudent5', NewStudent5),
@@ -67,7 +67,7 @@ TEMPLATES = {
     # 'creditcard': 'keypadcodes/contact_creditcard.html',
     'newstudent0': 'keypadcodes/newstudent0.html',
     'newstudent1': 'keypadcodes/newstudent1.html',
-    # 'newstudent2': 'keypadcodes/newstudent2.html',
+    'newstudent2': 'keypadcodes/newstudent2.html',
     # 'newstudent3': 'keypadcodes/newstudent3.html',
     # 'newstudent4': 'keypadcodes/newstudent4.html',
     # 'newstudent5': 'keypadcodes/newstudent5.html',
@@ -1027,7 +1027,7 @@ def deleteWebsite(request, website_id):
 @login_required
 def IndexView(request):
     template_name = "keypadcodes/index.html"
-    context = {}
+    context = {'manager': request.user.groups.filter(name='DB Managers').exists(),}
     return render(request, template_name, context)
 
 

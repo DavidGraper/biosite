@@ -3,7 +3,7 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<h1>Dashboard for user '{{ request.user.first_name }} {{ request.user.last_name }}'</h1>
+<h1>User '{{ request.user.first_name }} {{ request.user.last_name }}'</h1>
 
 <br>
 <!-- Nav pills -->
@@ -19,6 +19,9 @@
   </li>
   <li class="nav-item">
     <a class="nav-link" data-toggle="pill" href="#menu3">Phone Number(s)</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="pill" href="#menu4">Other Info<span class="caret"></span></a>
   </li>
 </ul>
 
@@ -73,7 +76,7 @@
         </tr>
       </table>
       <br />
-      <p style="text-align:right;" class="text-primary"><i class="fas fa-user-edit"></i>&nbsp;&nbsp;<a href={% url 'keypadcodes:person-update' person.id %}>Update</a></p>
+      <p style="text-align:right;" class="text-primary"><i class="fa fa-edit"></i>&nbsp;&nbsp;<a href={% url 'keypadcodes:person-update' person.id %}>Update</a></p>
       <br />
     </div>
   </div>
@@ -101,13 +104,13 @@
         <td>{{ address.city}}</td>
         <td>{{ address.stateid.stateabbreviation}}</td>
         <td>{{ address.countryid.countryname}}</td>
-        <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personaddress-update' address.id %}><i class="fas fa-wrench"></i></a></td>
-        <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personaddress-delete' address.id %}><i class="fas fa-trash" </i></a></td>
+        <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personaddress-update' address.id %}><i class="fa fa-wrench"></i></a></td>
+        <td style="text-align:center" width="25"><a href={% url 'keypadcodes:personaddress-delete' address.id %}><i class="fa fa-trash" </i></a></td>
       </tr>
       {% endfor %}
     </table>
     <br />
-    <p style="text-align:right;" class="text-primary"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;<a href={% url 'keypadcodes:personaddress-create' person.id %}>Add New Address</a></p>
+    <p style="text-align:right;" class="text-primary"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;<a href={% url 'keypadcodes:personaddress-create' person.id %}>Add New Address</a></p>
     <br />
   </div>
   <div id="menu2" class="container tab-pane fade"><br>
@@ -130,7 +133,7 @@
       {% endfor %}
     </table>
     <br />
-    <p style="text-align:right;" class="text-primary"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;<a href={% url 'keypadcodes:personemailaddress-create' person.id %}>Add New Email Address</a></p>
+    <p style="text-align:right;" class="text-primary"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;<a href={% url 'keypadcodes:personemailaddress-create' person.id %}>Add New Email Address</a></p>
     <br />
   </div>
   <div id="menu3" class="container tab-pane fade"><br>
@@ -155,9 +158,118 @@
       {% endfor %}
     </table>
     <br />
-    <p style="text-align:right;" class="text-primary"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;<a href={% url 'keypadcodes:personphone-create' person.id %}>Add New Phone Number</a></p>
+    <p style="text-align:right;" class="text-primary"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;<a href={% url 'keypadcodes:personphone-create' person.id %}>Add New Phone Number</a></p>
     <br />
   </div>
+
+  <div id="menu4" class="container tab-pane fade"><br>
+
+    <!-- <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-lg-2">
+            <ul class="nav nav-pills nav-stacked flex-column">
+              <li class="active"><a href="#">Home</a></li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Menu 1 <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Submenu 1-1</a></li>
+                  <li><a href="#">Submenu 1-2</a></li>
+                  <li><a href="#">Submenu 1-3</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Menu 2</a></li>
+              <li><a href="#">Menu 3</a></li>
+            </ul>
+        </div>
+
+
+        <div class="col-lg-10">
+
+          <table border="1" width="100%">
+            <tr>
+              <th>US Phone Code</th>
+              <th>Phone Type</th>
+              <th>Phone Number</th>
+              <th>Confidentiality</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+          </table>
+        </div>
+
+
+      </div> -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Academic</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Biology Department</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Biology Building</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">University</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Application</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <br />
+        <h5>Academic Information - <small>Information related to a person's academic background and goals</small></h5>
+        <br />
+        <p>Affiliated Organizations</p>
+        <p>Education</p>
+        <p>Publications</p>
+        <p>Research Statement</p>
+        <p>Academic Websites</p>
+      </div>
+      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <br />
+        <h5>Biology Department Information - <small>Information related to a person specific to the UAlbany Biology department</small></h5>
+        <br />
+        <p>Advisees</p>
+        <p>Advisors</p>
+        <p>Biology Degree Areas</p>
+        <p>Biology Department Job Titles</p>
+        <p>Biology Department Committees</p>
+      </div>
+      <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Etsy mixtape
+        wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack
+        lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard
+        locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify
+        squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie
+        etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog
+        stumptown. Pitchfork sustainable tofu synth chambray yr.</div>
+
+      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Food truck fixie
+        locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit,
+        blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee.
+        Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum
+        PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS
+        salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit,
+        sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester
+        stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</div>
+      <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Etsy mixtape
+        wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack
+        lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard
+        locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify
+        squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie
+        etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog
+        stumptown. Pitchfork sustainable tofu synth chambray yr.</div>
+    </div>
+  </div>
+
+  <br />
+  <p style="text-align:right;" class="text-primary"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;<a href={% url 'keypadcodes:personphone-create' person.id %}>Add New Phone Number</a></p>
+  <br />
+</div>
+
+
 </div>
 
 

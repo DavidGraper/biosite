@@ -4,4 +4,9 @@
 
 {% block content %}
   <h1>Biology Database Prototype 2021 v0.1</h1>
+  {% if manager %}
+  <h2>You are a manager</h2>
+  {% else %}
+  <h2>You are not a manager</h2>
+  {% endif %}
 {% endblock %}
